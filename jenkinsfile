@@ -29,7 +29,7 @@ pipeline {
     }
     stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $registry:latest"
+        sh "docker rmi $(docker images -f dangling=true | grep "maltrail" | grep "none" | awk '{print $3}')"
       }
     }
   }
